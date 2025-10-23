@@ -1,0 +1,11 @@
+File Koneksi = koseksi.php
+File Database berada di folder database = TA_fuzzy_ahp
+Admin 
+Username : admin
+Password : admin
+Kolektor 
+Username : kolektor
+Password : kolektor
+Manager
+username : manager
+password : manager

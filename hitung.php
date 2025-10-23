@@ -1,0 +1,278 @@
+<?php
+//session_start();
+include 'functions.php';
+session_start();
+if (!isset($_SESSION["user"])) {
+    echo '<script>alert("Anda harus login!");
+        window.location.href="login.php"; setTimeout(anu,3000);</script>';
+    exit;
+}
+
+$hak_akses=$_SESSION["level"];
+
+if ($hak_akses!="admin") {
+    echo "Anda tidak punya akses pada halaman admin";
+    exit;
+}
+
+$id_user=$_SESSION["id_user"];
+$username=$_SESSION["user"];
+$nama=$_SESSION["nama"];
+$jabatan=$_SESSION["level"];
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sistem Pendukung Keputusan Pemberian Kredit Koperasi Jaya Amerta Bumi</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,500,500i">
+        <link rel="stylesheet" href="assetssw/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assetssw/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assetssw/css/animate.css">
+        <link rel="stylesheet" href="assetssw/css/setele.css">
+
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assetssw/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assetssw/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assetssw/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assetssw/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assetssw/ico/apple-touch-icon-57-precomposed.png">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico" />
+
+  <title>SPK Metode Fuzzy AHP</title>
+  
+  <link href="assets/css/general.css" rel="stylesheet" />
+
+
+  <style type="text/css">
+      .navbar-inverse{
+  background-color:  #32CD32;
+       }
+    </style>
+</head>
+
+<body>
+  <!-- Top menu -->
+        <nav class="navbar navbar-inverse navbar-fixed-top navbar-no-bg" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="admin.php">Koperasi Jaya Amerta Bumi</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="top-navbar-1" class="dropdown">
+                    <ul class="nav navbar-nav navbar-right" class="dropdown-menu">
+                        <li>
+                            <a href="alternatif.php">
+                                <i class="fa fa-user"></i> <span>Home</span>
+                            </a>
+                        </li>
+                         <li>
+                            <a href="alternatif2.php">
+                                <i class="fa fa-user"></i> <span>Nasabah</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="kriteria.php">
+                                <i class="fa fa-th-large"></i> <span>kriteria</span>
+                            </a>
+                        </li>
+                       <li>
+                            <a href="#otherSectionss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" role="button" aria-controls="otherSectionss" >
+                                <i class="fa fa-signal"> <i class="caret"></i></i><span>Bobot</span>
+                            </a>
+                        <ul class="collapse list-unstyled" id="otherSectionss">
+                            <li>
+                                <a class="scroll-link" href="rel_kriteria.php">Kriteria</a>
+                            </li>
+                            <li>
+                                <a class="scroll-link" href="rel_alternatif.php">Alternatif</a>
+                            </li>
+                        </ul>
+                      </li>
+                       <li>
+                            <a href="#other" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" role="button" aria-controls="other" >
+                                <i class="fa fa-calculator"> <i class="caret"></i></i><span>SPK</span>
+                            </a>
+                        <ul class="collapse list-unstyled" id="other">
+                            <li>
+                                <a class="scroll-link" href="hitung.php">Perhitungan SPK</a>
+                            </li>
+                            <li>
+                                <a class="scroll-link" href="intruksi.php">Intruksi Perhitungan</a>
+                            </li>
+                        </ul>
+                      </li>
+                        <li>
+                            <a href="datatomanager.php">
+                               <i class="fa fa-calculator"></i> <span>Hasil Perhitungan</span>
+                            </a>
+                        </li>
+                         <li>
+                            <a href="user.php">
+                            <i class="fa fa-user"></i> <span>Profile</span>
+                             </a> 
+                        </li>
+                         <li>
+                            <a href="index.php?m=logout">
+                                <i class="fa fa-sign-out"></i> <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+             </div>
+        </nav>
+
+
+        <!-- Top content -->
+        <div class="top-content">
+            <div class="container">
+                
+                <div class="row">
+                    <div class="col-sm-12 text wow fadeInLeft">
+                        <h1>Koperasi<strong>Jaya Amerta Bumi</strong></h1>
+                       
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+  
+  
+
+<div class="well well-sm">  
+    <h1>Perhitungan</h1>
+</div>
+
+<?php
+//include 'functions.php';
+include 'akses.php';
+//menyimpan alternati yang dicentang ke vaiabel
+$selected = (is_array($_POST['selected'])) ? $_POST['selected'] : array();
+//$tanggal->tanggal = $_POST['tanggal'];
+?>
+
+<div class="container">
+    <form action="?m=hitung" method="post">
+        <input type="hidden" name="m" value="hitung" />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Pilih alternatif yang ingin dihitung</h3>
+            </div>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <td><input type="checkbox" id="checkAll" /></td>
+                        <th>Nama Alternatif</th>
+                    </tr>
+                </thead>
+                <?php
+                /*
+                <div class="form-group">
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" class="form-control" name="tanggal">
+                </div>
+                */
+                ?>
+
+
+                <?php
+                //mengambil data alternatif di database  
+                $rows = $db->get_results("SELECT * FROM tb_alternatif ORDER BY kode_alternatif");
+                $no = 1;
+                foreach ($rows as $row) : ?>
+                    <tr>
+                        <td><input type="checkbox" name="selected[]" value="<?= $row->kode_alternatif ?>" <?= (in_array($row->kode_alternatif, $selected)) ? 'checked' : '' ?> /></td>
+                        <td align="left"><?= $row->nama_alternatif ?></td>
+                    </tr>
+
+                <?php endforeach;
+                ?>
+                
+                
+            </table>
+            <div class="panel-footer">
+                <button type="submit" value="simpan">Hitung</button>
+            </div>
+        </div>
+    </form>
+</div>
+<?php
+//jika submit pada form
+if ($_POST) {
+
+    $c = $db->get_results("SELECT * FROM tb_rel_alternatif WHERE nilai>0");
+    
+    if (!$ALTERNATIF || !$KRITERIA) : // jika belum ada data kriteria atau alternatif
+        echo "Tampaknya anda belum mengatur alternatif dan kriteria. Silahkan tambahkan minimal 3 alternatif dan 3 kriteria.";
+    elseif (!$c) : //jika belum mengatur nilai alternatif (default nilai alternatif adalah -1)
+        echo "Tampaknya anda belum mengatur nilai alternatif. Silahkan atur pada menu <strong>Nilai Bobot</strong> > <strong>Nilai Bobot Alternatif</strong>.";
+    elseif (count($selected) < 2) : //jika memilih alternatif kuranf dari 2
+        print_msg("Pilih minimal 2 alternatif");
+    else :
+        //jika sukses akan memanggil hasil.php
+        include 'hitung_hasil.php';
+    endif;
+}
+?>
+
+<script>
+    //fungsi untuk mencentang (pilih) semua alternatif
+    $(function() {
+        $("#checkAll").click(function() {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+    });
+</script>
+  
+   <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 footer-copyright">
+                        &copy; Copyright by Finix <a href="http://azmind.com">AZMIND</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/waypoints.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+   
+</body>
+
+</html>
+
+
